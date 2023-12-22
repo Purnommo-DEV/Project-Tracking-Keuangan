@@ -17,6 +17,7 @@ class KegiatanController extends Controller
 
     public function tambah_kegiatan(Request $request){
         $anggaran = str_replace(['Rp. ', '.', '.'], ['', '', ''], $request->anggaran);
+        
         $tambah_kegiatan = Kegiatan::create([
             'nama_kegiatan' => $request->nama_kegiatan,
             'slug_nama_kegiatan' => Str::slug($request->nama_kegiatan),

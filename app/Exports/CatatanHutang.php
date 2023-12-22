@@ -32,7 +32,7 @@ class CatatanHutang implements FromCollection, WithHeadings, WithMapping, Should
                 $this->rupiahFormat($catatan->terbayar),
                 $this->rupiahFormat($catatan->saldo),
             ],
-            
+
         ];
     }
 
@@ -53,7 +53,7 @@ class CatatanHutang implements FromCollection, WithHeadings, WithMapping, Should
 
     public function registerEvents(): array
     {
-        
+
         return [
             AfterSheet::class => function(AfterSheet $event) {
 
@@ -62,7 +62,7 @@ class CatatanHutang implements FromCollection, WithHeadings, WithMapping, Should
                 $total_piutang = DetailKegiatan::sum('saldo');
                 $tgl_awal = request()->input('tanggal_awal') ;
                 $tgl_akhir   = request()->input('tanggal_akhir');
-                
+
                 $sheet = $event->sheet->getDelegate();
                 $sheet->insertNewRowBefore(1,3);
                 $lastContentColumn = (string) $event->sheet->getDelegate()->getHighestColumn();
@@ -70,7 +70,7 @@ class CatatanHutang implements FromCollection, WithHeadings, WithMapping, Should
                 $lastContentRowTotal = (string) $event->sheet->getDelegate()->getHighestRow();
                 $cellE1 = (string) $lastContentColumn . '1';
                 $cellELast = (string) 'E' . $lastContentRow;
-                
+
                 $stringTotal = (string) 'B'. $lastContentRowTotal+1;
                 $sumPiutang = (string) 'C'. $lastContentRowTotal+1;
                 $sumTerbayar = (string) 'D'. $lastContentRowTotal+1;
@@ -79,7 +79,7 @@ class CatatanHutang implements FromCollection, WithHeadings, WithMapping, Should
                 // JUDUL
                 $event->sheet->getDelegate()
                     ->setCellValue('A1','LAPORAN.')->mergeCells('A1:E1');
-                
+
                 // PERIODE
                 $event->sheet->getDelegate()
                     ->setCellValue('A2','Periode : '.Carbon::parse($tgl_awal)->format('d F y').' - '.Carbon::parse($tgl_akhir)->format('d F y'))->mergeCells('A2:E2');
@@ -174,10 +174,10 @@ class CatatanHutang implements FromCollection, WithHeadings, WithMapping, Should
                 //         'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
                 //     ],
                 // ]);
-                
+
             },
-            
+
         ];
     }
-    
+
 }

@@ -54,6 +54,7 @@ class DetailKegiatanController extends Controller
         $saldo = Saldo::where('kegiatan_id', $detail_kegiatan->kegiatan_id)->select('sisa_saldo')->first();
         $detail_kegiatan->piutang = $piutang;
         $detail_kegiatan->terbayar = $terbayar+$detail_kegiatan->terbayar;
+        
         if($detail_kegiatan->terbayar > $piutang){
             Alert::error('Gagal', 'Pembayaran melebihi hutang');
             return back();
